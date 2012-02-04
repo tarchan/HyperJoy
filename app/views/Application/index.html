@@ -4,7 +4,7 @@
 <div class="navbar">
   <div class="navbar-inner">
     <div class="container">
-	    <a class="brand" href="#">HyperJoy検索</a>
+	    <a class="brand" href="@{Application.index()}">HyperJoy検索</a>
 
 <ul class="nav">
   <li class="dropdown">
@@ -20,11 +20,30 @@
 </ul>
 
 <form class="navbar-search pull-left" action="">
-  <input type="text" class="search-query span2" placeholder="キーワード">
+  <input type="text" class="search-query span2" placeholder="キーワード" name="keyword">
 </form>
 
     </div>
   </div>
+</div>
+
+<p>キーワード：${keyword}</p>
+<p>曲数：${songs.size}</p>
+
+<div id="songlist">
+	#{list songs, as:'song'}
+		<div>
+			${!song.isHot ? '[新]' : ''}
+			<span>${song.id}</span>
+			<span>${song.tid}</span>
+			<span>${song.title}</span>
+			<span>${song.artist}</span>
+			<span>(${song.groups})</span>
+		</div>
+		<small>
+			<span>${song.keywords}</span>
+		</small>
+	#{/list}
 </div>
 
 <!-- Google AdSense --> 
