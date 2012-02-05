@@ -27,14 +27,17 @@
   </div>
 </div>
 
+<div class="alert alert-info">
+<a class="close">&times;</a>
 <p>キーワード：${keyword}</p>
-<p>曲数：${songs.size}</p>
+<p>曲数：${songs.size}/${total}</p>
+</div>
 
 <div id="songlist">
 	#{list songs, as:'song'}
 		<div>
-			${!song.isHot ? '[新]' : ''}
-			<span>${song.id}</span>
+			<span class="${song.isHot ? 'label label-important' : ''}">${song.isHot ? '新' : ''}</span>
+			<span>${song.hot}</span>
 			<span>${song.tid}</span>
 			<span>${song.title}</span>
 			<span>${song.artist}</span>

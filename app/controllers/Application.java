@@ -15,7 +15,7 @@ public class Application extends Controller
 	public static void loadSongs()
 	{
 		List<Song> songs = Song.findAll();
-//		if (songs.size() == 0)
+		if (songs.size() == 0)
 		{
 			Song.deleteAll();
 			Song.load(HYPERJOY);
@@ -24,11 +24,12 @@ public class Application extends Controller
 
 	public static void index(String keyword)
 	{
+		long total = Song.count();
 		List<Song> songs = Song.findAll();
 		if (keyword != null && keyword.length() > 0)
 		{
 			songs = Song.find("keywords like ?", "%" + keyword + "%").fetch();
 		}
-		render(keyword, songs);
+		render(keyword, songs, total);
 	}
 }

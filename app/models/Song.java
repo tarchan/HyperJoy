@@ -10,6 +10,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import javax.persistence.Entity;
+import javax.persistence.Lob;
 
 import play.Logger;
 import play.db.jpa.Model;
@@ -19,19 +20,26 @@ public class Song extends Model
 {
 	public String tid;
 
+	@Lob
 	public String title;
 
+	@Lob
 	public String artist;
 
+	@Lob
 	public String groups;
 
+	@Lob
 	public String keywords;
+
+	@Lob
+	public String hot;
 
 	public boolean isHot;
 
 	static Pattern p = Pattern.compile("^<li>.*?([0-9]{5,})(.+)", Pattern.CASE_INSENSITIVE);
 
-	static Pattern p2 = Pattern.compile("(\\[[0-9]{2}/[0-9]{2}\\])?.*?([0-9,-]{5,})／([^／]+?)／([^／]+)／?(.*)$", Pattern.CASE_INSENSITIVE);
+	static Pattern p2 = Pattern.compile("(\\[.*?\\])?.*?([0-9,-]{5,})／([^／]+?)／([^／]+)／?(.*)$", Pattern.CASE_INSENSITIVE);
 
 	public static void load(String path)
 	{
@@ -51,14 +59,14 @@ public class Song extends Model
 				Matcher m = p.matcher(line);
 				if (m.find())
 				{
-					Logger.info("[%d] %s", i, line);
+//					Logger.info("[%d] %s", i, line);
 					
 					Matcher m2 = p2.matcher(line);
 					if (m2.find())
 					{
 						Song song = new Song();
-						String hot = m2.group(1);
-						song.isHot = hot != null;
+						song.hot = m2.group(1);
+						song.isHot = song.hot != null && song.hot.length() > 0;
 						song.tid = m2.group(2);
 						song.title = m2.group(3);
 						song.artist = m2.group(4);
@@ -70,7 +78,7 @@ public class Song extends Model
 
 				++i;
 				if (i % 1000 == 0) Logger.info("%d loaded.", i);
-				if (i == 100) break;
+//				if (i == 1000) break;
 			}
 		}
 		catch (IOException x)
