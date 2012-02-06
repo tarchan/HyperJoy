@@ -13,7 +13,6 @@ public class Application extends Controller
 {
 	static final String HYPERJOY = "http://homepage1.nifty.com/yottoide/hyperjoy.html";
 
-	@Before
 	public static void loadSongs()
 	{
 //		List<Song> songs = Song.findAll();
