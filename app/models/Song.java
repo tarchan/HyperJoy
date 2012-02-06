@@ -51,8 +51,8 @@ public class Song extends Model
 		try
 		{
 			URLConnection con = new URL(path).openConnection();
-			con.setReadTimeout(10000);
-			con.setConnectTimeout(10000);
+//			con.setReadTimeout(10000);
+//			con.setConnectTimeout(10000);
 			con.connect();
 			BufferedReader r = new BufferedReader(new InputStreamReader(con.getInputStream(), "Windows-31J"));
 			int i = 0;
