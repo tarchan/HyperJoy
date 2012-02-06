@@ -13,6 +13,7 @@ public class Application extends Controller
 {
 	static final String HYPERJOY = "http://homepage1.nifty.com/yottoide/hyperjoy.html";
 
+	@Before
 	public static void loadSongs()
 	{
 //		List<Song> songs = Song.findAll();
@@ -21,27 +22,19 @@ public class Application extends Controller
 			Song.deleteAll();
 			Song.load(HYPERJOY);
 		}
-//		else
-//		{
-//			List<Song> songs = Song.findAll();
-//			for (Song song : songs)
-//			{
-//				song.upgrade();
-//			}
-//		}
 	}
 
 	public static void index(String keyword)
 	{
-		try
-		{
-			String q = request.querystring;
-			q = URLDecoder.decode(q, "utf-8");
-			Logger.info("querystring=%s", q);
-		}
-		catch (UnsupportedEncodingException x)
-		{
-		}
+//		try
+//		{
+//			String q = request.querystring;
+//			q = URLDecoder.decode(q, "utf-8");
+//			Logger.info("querystring=%s", q);
+//		}
+//		catch (UnsupportedEncodingException x)
+//		{
+//		}
 
 		long total = Song.count();
 		List<Song> songs;
