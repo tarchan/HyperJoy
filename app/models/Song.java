@@ -39,12 +39,20 @@ public class Song extends Model
 
 	public boolean isMedley;
 
+	public boolean isVocaloid;
+
+	public boolean isToho;
+
 	static Pattern p = Pattern.compile("^<li>.*?([0-9]{5,})(.+)", Pattern.CASE_INSENSITIVE);
 
 	static Pattern p2 = Pattern.compile("(\\[.*?\\])?.*?([0-9,-]{5,})／([^／]+?)／([^／]+)／?(.*)$", Pattern.CASE_INSENSITIVE);
 
 //	static Pattern MEDLEY_PAT = Pattern.compile("<P CLASS=\"medley\">(.*?)</P>");
 	static Pattern MEDLEY_PAT = Pattern.compile("<P CLASS=\"medley\">\\[メドレー曲目\\]<BR>(.*?)</P>");
+
+	static Pattern VOCALOID_PAT = Pattern.compile("(初音ミク|鏡音リン|鏡音レン|巡音ルカ|MEIKO、KAITO|GUMI)");
+
+	static Pattern TOHO_PAT = Pattern.compile("(東方)");
 
 	public static void load(String path)
 	{
@@ -85,7 +93,7 @@ public class Song extends Model
 
 				++i;
 				if (i % 1000 == 0) Logger.info("%d loaded.", i);
-				if (i == 10) break;
+//				if (i == 10) break;
 			}
 			Logger.info("%d loaded.", i);
 		}
@@ -118,6 +126,7 @@ public class Song extends Model
 		}
 		medley(artist);
 		medley(groups);
+		getType(line);
 	}
 
 	void medley(String text)
@@ -131,6 +140,28 @@ public class Song extends Model
 			isMedley = true;
 			groups = mm.group(1);
 			artist = mm.replaceAll("");
+			save();
+		}
+	}
+
+	void getType(String text)
+	{
+		if (text == null) return;
+
+		Matcher mv = VOCALOID_PAT.matcher(text);
+		if (mv.find())
+		{
+			Logger.info("ボカロ: %s", tid);
+			isVocaloid = true;
+		}
+		Matcher mt = TOHO_PAT.matcher(text);
+		if (mt.find())
+		{
+			Logger.info("東方: %s", tid);
+			isToho = true;
+		}
+		if (isVocaloid || isToho)
+		{
 			save();
 		}
 	}

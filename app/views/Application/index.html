@@ -7,9 +7,9 @@
 	    <a class="brand" href="@{Application.index()}">HyperJoy検索</a>
 
 <ul class="nav">
-  <li class="active"><a href="#anime">アニメ</a></li>
-  <li><a href="#vocaloid">ボカロ</a></li>
-  <li><a href="#toho">東方</a></li>
+  <li class="${request.action == 'Application.anime' ? 'active' : ''}"><a href="@{Application.anime()}">アニメ</a></li>
+  <li class="${request.action == 'Application.vocaloid' ? 'active' : ''}"><a href="@{Application.vocaloid()}">ボカロ</a></li>
+  <li class="${request.action == 'Application.toho' ? 'active' : ''}"><a href="@{Application.toho()}">東方</a></li>
 </ul>
 
 <!-- <ul class="nav">
@@ -38,6 +38,7 @@
 <a class="close">&times;</a>
 <p>キーワード：${keyword}</p>
 <p>曲数：${songs?.size}/${total}</p>
+<p>${request.action}</p>
 </div>
 
 <div id="songlist">

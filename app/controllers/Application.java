@@ -16,8 +16,9 @@ public class Application extends Controller
 	@Before
 	public static void loadSongs()
 	{
-		List<Song> songs = Song.findAll();
-		if (songs.size() == 0)
+//		List<Song> songs = Song.findAll();
+//		if (songs.size() == 0)
+		if (Song.count() == 0)
 		{
 			Song.deleteAll();
 			Song.load(HYPERJOY);
@@ -36,10 +37,10 @@ public class Application extends Controller
 //		{
 //		}
 
-//		long total = Song.count();
-//		List<Song> songs;
-		List<Song> songs = Song.findAll();
-		int total = songs.size();
+		long total = Song.count();
+		List<Song> songs;
+//		List<Song> songs = Song.findAll();
+//		int total = songs.size();
 		if (keyword != null && keyword.length() > 0)
 		{
 			songs = Song.find("keywords like ?", "%" + keyword + "%").fetch();
@@ -52,6 +53,46 @@ public class Application extends Controller
 		{
 			songs = null;
 		}
+		render(keyword, songs, total);
+	}
+
+	public static void anime(String keyword)
+	{
+		List<Song> songs = Song.find("isVocaloid is false and isToho is false and keywords like ?", "%" + keyword + "%").fetch();
+		for (Song song : songs)
+		{
+			song.upgrade();
+		}
+		long total = Song.count("isVocaloid is false and isToho is false");
+		render(keyword, songs, total);
+	}
+
+	public static void vocaloid(String keyword)
+	{
+		// 初音ミク、鏡音リン、鏡音レン、巡音ルカ、MEIKO、KAITO、GUMI
+		List<Song> songs = Song.find("(keywords like ? or keywords like ? or keywords like ? or keywords like ?" +
+				" or keywords like ? or keywords like ? or keywords like ?) and keywords like ?", 
+				"%初音ミク%", "%鏡音リン%", "%鏡音レン%", "%巡音ルカ%", 
+				"%MEIKO%", "%KAITO%", "%GUMI%", "%" + keyword + "%").fetch();
+		for (Song song : songs)
+		{
+			song.upgrade();
+		}
+		long total = Song.count("keywords like ? or keywords like ? or keywords like ? or keywords like ?" +
+				" or keywords like ? or keywords like ? or keywords like ?", 
+				"%初音ミク%", "%鏡音リン%", "%鏡音レン%", "%巡音ルカ%", 
+				"%MEIKO%", "%KAITO%", "%GUMI%");
+		render(keyword, songs, total);
+	}
+
+	public static void toho(String keyword)
+	{
+		List<Song> songs = Song.find("keywords like ? and keywords like ?", "%東方%", "%" + keyword + "%").fetch();
+		for (Song song : songs)
+		{
+			song.upgrade();
+		}
+		long total = Song.count("keywords like ?", "%東方%");
 		render(keyword, songs, total);
 	}
 }
