@@ -48,9 +48,9 @@
 			<span class="${song.isHot ? 'label label-important' : ''}">${song.isHot ? '新' : ''}</span>
 			<span>${song.hot}</span>
 			<span class="${song.isMedley ? 'label label-success' : ''}">${song.isMedley ? 'メドレー' : ''}</span>
-			<span>${song.title}</span>
-			<span>${song.artist}</span>
-			<span>(${song.groups})</span>
+			<span>${song.title.raw()}</span>
+			<span>${song.artist.raw()}</span>
+			<span>(${song.groups.raw()})</span>
 		</div>
 		<!-- <small>
 			<span>${song.keywords}</span>

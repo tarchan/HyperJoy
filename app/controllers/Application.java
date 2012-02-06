@@ -67,7 +67,7 @@ public class Application extends Controller
 		render(keyword, songs, total);
 	}
 
-	public static void vocaloid(String keyword)
+	public static void vocaloid1(String keyword)
 	{
 		// 初音ミク、鏡音リン、鏡音レン、巡音ルカ、MEIKO、KAITO、GUMI
 		List<Song> songs = Song.find("(keywords like ? or keywords like ? or keywords like ? or keywords like ?" +
@@ -85,7 +85,18 @@ public class Application extends Controller
 		render(keyword, songs, total);
 	}
 
-	public static void toho(String keyword)
+	public static void vocaloid(String keyword)
+	{
+		List<Song> songs = Song.find("isVocaloid is true and keywords like ?", "%" + keyword + "%").fetch();
+		for (Song song : songs)
+		{
+			song.upgrade();
+		}
+		long total = Song.count("isVocaloid is true");
+		render(keyword, songs, total);
+	}
+
+	public static void toho1(String keyword)
 	{
 		List<Song> songs = Song.find("keywords like ? and keywords like ?", "%東方%", "%" + keyword + "%").fetch();
 		for (Song song : songs)
@@ -93,6 +104,17 @@ public class Application extends Controller
 			song.upgrade();
 		}
 		long total = Song.count("keywords like ?", "%東方%");
+		render(keyword, songs, total);
+	}
+
+	public static void toho(String keyword)
+	{
+		List<Song> songs = Song.find("isToho is true and keywords like ?", "%" + keyword + "%").fetch();
+		for (Song song : songs)
+		{
+			song.upgrade();
+		}
+		long total = Song.count("isToho is true");
 		render(keyword, songs, total);
 	}
 }

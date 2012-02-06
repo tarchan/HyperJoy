@@ -50,7 +50,7 @@ public class Song extends Model
 //	static Pattern MEDLEY_PAT = Pattern.compile("<P CLASS=\"medley\">(.*?)</P>");
 	static Pattern MEDLEY_PAT = Pattern.compile("<P CLASS=\"medley\">\\[メドレー曲目\\]<BR>(.*?)</P>");
 
-	static Pattern VOCALOID_PAT = Pattern.compile("(初音ミク|鏡音リン|鏡音レン|巡音ルカ|MEIKO、KAITO|GUMI)");
+	static Pattern VOCALOID_PAT = Pattern.compile("(初音ミク|鏡音リン|鏡音レン|巡音ルカ|MEIKO|KAITO|GUMI)");
 
 	static Pattern TOHO_PAT = Pattern.compile("(東方)");
 
@@ -136,7 +136,7 @@ public class Song extends Model
 		Matcher mm = MEDLEY_PAT.matcher(text);
 		if (mm.find())
 		{
-			Logger.info("メドレー: %s", tid);
+//			Logger.info("メドレー: %s", tid);
 			isMedley = true;
 			groups = mm.group(1);
 			artist = mm.replaceAll("");
@@ -151,13 +151,13 @@ public class Song extends Model
 		Matcher mv = VOCALOID_PAT.matcher(text);
 		if (mv.find())
 		{
-			Logger.info("ボカロ: %s", tid);
+//			Logger.info("ボカロ: %s", tid);
 			isVocaloid = true;
 		}
 		Matcher mt = TOHO_PAT.matcher(text);
 		if (mt.find())
 		{
-			Logger.info("東方: %s", tid);
+//			Logger.info("東方: %s", tid);
 			isToho = true;
 		}
 		if (isVocaloid || isToho)
