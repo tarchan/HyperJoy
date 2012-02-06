@@ -85,7 +85,7 @@ public class Song extends Model
 
 				++i;
 				if (i % 1000 == 0) Logger.info("%d loaded.", i);
-				if (i == 100) break;
+				if (i == 10) break;
 			}
 			Logger.info("%d loaded.", i);
 		}
