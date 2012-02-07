@@ -45,7 +45,9 @@ public class Song extends Model
 
 	static Pattern p = Pattern.compile("^<li>.*?([0-9]{5,})(.+)", Pattern.CASE_INSENSITIVE);
 
-	static Pattern p2 = Pattern.compile("(\\[.*?\\])?.*?([0-9,-]{5,})／([^／]+?)／([^／]+)／?(.*)$", Pattern.CASE_INSENSITIVE);
+	static Pattern p2 = Pattern.compile("([0-9/]{5})?.*?([0-9,-]{5,})／([^／]+?)／([^／]+)／?(.*)$");
+
+	static Pattern HOT_PAT = Pattern.compile("<FONT COLOR=\"#FF0000\"><B>");
 
 //	static Pattern MEDLEY_PAT = Pattern.compile("<P CLASS=\"medley\">(.*?)</P>");
 	static Pattern MEDLEY_PAT = Pattern.compile("<P CLASS=\"medley\">\\[メドレー曲目\\]<BR>(.*?)</P>");
@@ -116,17 +118,22 @@ public class Song extends Model
 		Matcher m2 = p2.matcher(line);
 		if (m2.find())
 		{
-			hot = m2.group(1);
-			isHot = hot != null && hot.length() > 0;
+//			hot = m2.group(1);
+//			isHot = hot != null && hot.length() > 0;
 			tid = m2.group(2);
 			title = m2.group(3);
 			artist = m2.group(4);
 			groups = m2.group(5);
+			medley(artist);
+			medley(groups);
+			setTag(line);
 			save();
 		}
-		medley(artist);
-		medley(groups);
-		getType(line);
+		else
+		{
+			Logger.info("曲番号未定: %s", line);
+			return;
+		}
 	}
 
 	void medley(String text)
@@ -140,29 +147,32 @@ public class Song extends Model
 			isMedley = true;
 			groups = mm.group(1);
 			artist = mm.replaceAll("");
-			save();
+//			save();
 		}
 	}
 
-	void getType(String text)
+	void setTag(String text)
 	{
 		if (text == null) return;
 
-		Matcher mv = VOCALOID_PAT.matcher(text);
-		if (mv.find())
+		if (HOT_PAT.matcher(text).find())
+		{
+//			Logger.info("新曲: %s", tid);
+			isHot = true;
+		}
+		if (VOCALOID_PAT.matcher(text).find())
 		{
 //			Logger.info("ボカロ: %s", tid);
 			isVocaloid = true;
 		}
-		Matcher mt = TOHO_PAT.matcher(text);
-		if (mt.find())
+		if (TOHO_PAT.matcher(text).find())
 		{
 //			Logger.info("東方: %s", tid);
 			isToho = true;
 		}
-		if (isVocaloid || isToho)
-		{
-			save();
-		}
+//		if (isHot || isVocaloid || isToho)
+//		{
+//			save();
+//		}
 	}
 }
