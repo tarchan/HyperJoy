@@ -131,7 +131,7 @@ public class Song extends Model
 		}
 		else
 		{
-			Logger.info("曲番号未定: %s", line);
+//			Logger.info("曲番号未定: %s", line);
 			return;
 		}
 	}
