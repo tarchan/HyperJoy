@@ -4,12 +4,12 @@
 <div class="navbar navbar-fixed-top">
   <div class="navbar-inner">
     <div class="container-fluid">
-	    <a class="brand" href="@{Application.index()}">HyperJoy検索</a>
+	    <a class="brand" href="@{Application.index(keyword)}">HyperJoy検索</a>
 
 <ul class="nav">
-  <li class="${request.action == 'Application.anime' ? 'active' : ''}"><a href="@{Application.anime()}">アニメ</a></li>
-  <li class="${request.action == 'Application.vocaloid' ? 'active' : ''}"><a href="@{Application.vocaloid()}">ボカロ</a></li>
-  <li class="${request.action == 'Application.toho' ? 'active' : ''}"><a href="@{Application.toho()}">東方</a></li>
+  <li class="${request.action == 'Application.anime' ? 'active' : ''}"><a href="@{Application.anime(keyword)}">アニメ</a></li>
+  <li class="${request.action == 'Application.vocaloid' ? 'active' : ''}"><a href="@{Application.vocaloid(keyword)}">ボカロ</a></li>
+  <li class="${request.action == 'Application.toho' ? 'active' : ''}"><a href="@{Application.toho(keyword)}">東方</a></li>
 </ul>
 
 *{
@@ -28,7 +28,7 @@
  -->
 }*
 
-<form class="navbar-search pull-left" action="">
+<form class="navbar-search pull-left" method="get" action="">
   <input type="text" class="search-query span2" placeholder="キーワード" name="keyword">
 </form>
 
@@ -36,11 +36,18 @@
   </div>
 </div>
 
-<div id="info" class="alert alert-info">
+*{
+<div class="alert alert-info">
+<a class="close">&times;</a>
+<p>曲数：${total} 曲</p>
+</div>
+}*
+
+<div class="alert alert-success">
 <a class="close">&times;</a>
 <p>キーワード：${keyword}</p>
 <p>曲数：${songs?.size}/${total}</p>
-<p>${request.action}</p>
+*{<p>${request.action}</p>}*
 </div>
 
 <div id="songlist">

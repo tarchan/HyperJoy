@@ -3,9 +3,10 @@
 # ~~~~
 
 # Home page
-*       /anime/{keyword}                        Application.anime
-*       /vocaloid/{keyword}                     Application.vocaloid
-*       /toho/{keyword}                         Application.toho
+GET     /anime/{keyword}                        Application.anime
+GET     /vocaloid/{keyword}                     Application.vocaloid
+GET     /toho/{keyword}                         Application.toho
+#GET     /all/{keyword}                          Application.index
 GET     /                                       Application.index
 
 # Ignore favicon requests

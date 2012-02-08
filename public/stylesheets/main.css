@@ -2,10 +2,14 @@
  text-align: center;
 }
 
-#info {
- margin-top: 60px;
+body {
+ padding-top: 60px;
 }
 
+/* #info {
+ margin-top: 60px;
+}
+ */
 #songlist {
  padding: 0 10px;
  margin-bottom: 20px;
