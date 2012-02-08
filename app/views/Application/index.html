@@ -4,7 +4,7 @@
 <div class="navbar navbar-fixed-top">
   <div class="navbar-inner">
     <div class="container-fluid">
-	    <a class="brand" href="@{Application.index(keyword)}">HyperJoy検索</a>
+	    <a class="brand" href="@{Application.index()}">HyperJoy検索</a>
 
 <ul class="nav">
   <li class="${request.action == 'Application.anime' ? 'active' : ''}"><a href="@{Application.anime(keyword)}">アニメ</a></li>
@@ -36,19 +36,29 @@
   </div>
 </div>
 
-*{
+#{ifnot keyword}
 <div class="alert alert-info">
 <a class="close">&times;</a>
-<p>曲数：${total} 曲</p>
+<p>曲数：${total} 件</p>
 </div>
-}*
-
+#{/ifnot}
+#{else}
+#{if songs?.size == 0}
+<div class="alert alert-error">
+<a class="close">&times;</a>
+<p>キーワード：${keyword}</p>
+曲が見つかりません。
+</div>
+#{/if}
+#{else}
 <div class="alert alert-success">
 <a class="close">&times;</a>
 <p>キーワード：${keyword}</p>
-<p>曲数：${songs?.size}/${total}</p>
+<p>曲数：${total} 件中 ${songs?.size} 件</p>
 *{<p>${request.action}</p>}*
 </div>
+#{/else}
+#{/else}
 
 <div id="songlist">
 	#{list songs, as:'song'}
