@@ -11,8 +11,9 @@ GET     /toho/{keyword}                         Application.toho
 GET     /toho                                   Application.toho
 GET     /all/{keyword}                          Application.index
 GET     /                                       Application.index
-#POST    /find                                   Application.find
-GET     /find/{tag}/{keyword}                   Application.find
+POST    /find                                   Application.find
+#POST    /find/{tag}/{keyword}                   Application.find
+#POST    /find/{tag}                             Application.find
 
 # Ignore favicon requests
 GET     /favicon.ico                            404

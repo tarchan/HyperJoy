@@ -4,28 +4,38 @@
 <div class="navbar navbar-fixed-top">
   <div class="navbar-inner">
     <div class="container-fluid">
-	    <a class="brand" href="@{index(keyword)}">HyperJoy検索</a>
+	    <a id="logo" class="brand" href="@{index()}">HyperJoy検索</a>
 
-<ul class="nav">
+<ul id="tabnav" class="nav">
   <li class="${request.actionMethod == 'anime' ? 'active' : ''}"><a href="@{anime(keyword)}">アニメ</a></li>
   <li class="${request.actionMethod == 'vocaloid' ? 'active' : ''}"><a href="@{vocaloid(keyword)}">ボカロ</a></li>
   <li class="${request.actionMethod == 'toho' ? 'active' : ''}"><a href="@{toho(keyword)}">東方</a></li>
 </ul>
 
-*{
-<!-- <ul class="nav">
+<ul id="dropnav" class="nav">
   <li class="dropdown">
     <a href="#" class="dropdown-toggle" data-toggle="dropdown">ジャンル <b class="caret"></b></a>
     <ul class="dropdown-menu">
-      <li><a href="#anime">アニメ</a></li>
-      <li><a href="#vocaloid">ニコ動</a></li>
-      <li><a href="#toho">東方</a></li>
+      <li><a href="@{anime(keyword)}">アニメ</a></li>
+      <li><a href="@{vocaloid(keyword)}">ニコ動</a></li>
+      <li><a href="@{toho(keyword)}">東方</a></li>
+*{
       <li class="divider"></li>
       <li><a href="#hot">新曲</a></li>
+}*
     </ul>
   </li>
 </ul>
- -->
+
+*{
+#{form @find(tag, keyword), class:'navbar-search pull-left'}
+#{field 'tag'}
+  <input type="hidden" name="${field.name}" value="${request.actionMethod}">
+#{/field}
+#{field 'keyword'}
+  <input type="text" class="search-query span2" placeholder="キーワード" name="${field.name}" value="${field.value}">
+#{/field}
+#{/form}
 }*
 
 <form class="navbar-search pull-left" action="">

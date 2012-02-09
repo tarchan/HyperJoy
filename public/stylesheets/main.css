@@ -7,12 +7,26 @@ body {
 }
 
 #songlist {
- padding: 0 10px;
+ padding: 10px;
  margin-bottom: 20px;
  box-shadow: 0px 0px 10px rgba(0,0,0,.5);
- line-height: 170%;
+ line-height: 200%;
 }
 
 #songlist > div {
  cursor: pointer;
+}
+
+#dropnav {
+ display: none;
+}
+
+@media (max-width:480px){
+	#logo, #tabnav {
+	 display: none;
+	}
+	
+	#dropnav {
+	 display: block;
+	}
 }
