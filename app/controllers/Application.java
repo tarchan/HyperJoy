@@ -70,7 +70,7 @@ public class Application extends Controller
 			song.upgrade();
 		}
 		long total = Song.count("isVocaloid is false and isToho is false");
-		render(keyword, songs, total);
+		render("@index", keyword, songs, total);
 	}
 
 	public static void vocaloid(String keyword)
@@ -81,7 +81,7 @@ public class Application extends Controller
 			song.upgrade();
 		}
 		long total = Song.count("isVocaloid is true");
-		render(keyword, songs, total);
+		render("@index", keyword, songs, total);
 	}
 
 	public static void toho(String keyword)
@@ -92,6 +92,26 @@ public class Application extends Controller
 			song.upgrade();
 		}
 		long total = Song.count("isToho is true");
-		render(keyword, songs, total);
+		render("@index", keyword, songs, total);
+	}
+
+	public static void find(String tag, String keyword)
+	{
+		if (tag.equals("anime"))
+		{
+			anime(keyword);
+		}
+		else if (tag.equals("vocaloid"))
+		{
+			vocaloid(keyword);
+		}
+		else if (tag.equals("toho"))
+		{
+			toho(keyword);
+		}
+		else
+		{
+			index(keyword);
+		}
 	}
 }

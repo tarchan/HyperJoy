@@ -4,10 +4,15 @@
 
 # Home page
 GET     /anime/{keyword}                        Application.anime
+GET     /anime                                  Application.anime
 GET     /vocaloid/{keyword}                     Application.vocaloid
+GET     /vocaloid                               Application.vocaloid
 GET     /toho/{keyword}                         Application.toho
-#GET     /all/{keyword}                          Application.index
+GET     /toho                                   Application.toho
+GET     /all/{keyword}                          Application.index
 GET     /                                       Application.index
+#POST    /find                                   Application.find
+GET     /find/{tag}/{keyword}                   Application.find
 
 # Ignore favicon requests
 GET     /favicon.ico                            404

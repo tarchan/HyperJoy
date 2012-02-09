@@ -4,12 +4,12 @@
 <div class="navbar navbar-fixed-top">
   <div class="navbar-inner">
     <div class="container-fluid">
-	    <a class="brand" href="@{Application.index()}">HyperJoy検索</a>
+	    <a class="brand" href="@{index(keyword)}">HyperJoy検索</a>
 
 <ul class="nav">
-  <li class="${request.action == 'Application.anime' ? 'active' : ''}"><a href="@{Application.anime(keyword)}">アニメ</a></li>
-  <li class="${request.action == 'Application.vocaloid' ? 'active' : ''}"><a href="@{Application.vocaloid(keyword)}">ボカロ</a></li>
-  <li class="${request.action == 'Application.toho' ? 'active' : ''}"><a href="@{Application.toho(keyword)}">東方</a></li>
+  <li class="${request.actionMethod == 'anime' ? 'active' : ''}"><a href="@{anime(keyword)}">アニメ</a></li>
+  <li class="${request.actionMethod == 'vocaloid' ? 'active' : ''}"><a href="@{vocaloid(keyword)}">ボカロ</a></li>
+  <li class="${request.actionMethod == 'toho' ? 'active' : ''}"><a href="@{toho(keyword)}">東方</a></li>
 </ul>
 
 *{
@@ -28,8 +28,9 @@
  -->
 }*
 
-<form class="navbar-search pull-left" method="get" action="">
-  <input type="text" class="search-query span2" placeholder="キーワード" name="keyword">
+<form class="navbar-search pull-left" action="">
+  <input type="text" class="search-query span2" placeholder="キーワード" name="keyword" value="${keyword}">
+  <input type="hidden" name="tag" value="${request.actionMethod}">
 </form>
 
     </div>
@@ -56,6 +57,7 @@
 <p>キーワード：${keyword}</p>
 <p>曲数：${total} 件中 ${songs?.size} 件</p>
 *{<p>${request.action}</p>}*
+*{<p>${request.actionMethod}</p>}*
 </div>
 #{/else}
 #{/else}
