@@ -12,19 +12,19 @@ import models.*;
 
 public class Application extends Controller
 {
-//	static final String HYPERJOY = "http://homepage1.nifty.com/yottoide/hyperjoy.html";
-//
-//	@Before
-//	public static void loadSongs()
-//	{
-////		List<Song> songs = Song.findAll();
-////		if (songs.size() == 0)
-//		if (Song.count() == 0)
-//		{
-//			Song.deleteAll();
-//			Song.load(HYPERJOY);
-//		}
-//	}
+	static final String HYPERJOY = "http://homepage1.nifty.com/yottoide/hyperjoy.html";
+
+	@Before
+	public static void loadSongs()
+	{
+//		List<Song> songs = Song.findAll();
+//		if (songs.size() == 0)
+		if (Song.count() == 0)
+		{
+			Song.deleteAll();
+			Song.load(HYPERJOY);
+		}
+	}
 
 	public static void index0(String keyword)
 	{

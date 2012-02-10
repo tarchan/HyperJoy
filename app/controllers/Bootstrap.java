@@ -18,9 +18,9 @@ public class Bootstrap extends Job
 //		{
 //			Fixtures.loadModels("initial-data.yml");
 //		}
-		if (Song.count() == 0)
-		{
-			Song.load(HYPERJOY);
-		}
+//		if (Song.count() == 0)
+//		{
+//			Song.load(HYPERJOY);
+//		}
 	}
 }
