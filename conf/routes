@@ -19,6 +19,8 @@ GET     /                                       Application.index
 GET     /favicon.ico                            404
 
 # Map static resources from the /app/public folder to the /public path
+GET     /public/img/glyphicons-halflings-white.png staticFile:/public/images/glyphicons-halflings-white.png
+GET     /public/img/glyphicons-halflings.png    staticFile:/public/images/glyphicons-halflings.png
 GET     /public/                                staticDir:public
 
 # Catch all

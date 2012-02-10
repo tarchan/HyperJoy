@@ -2,9 +2,15 @@ $(function()
 {
 	//window.scrollTo(0, 1);
 
+	// タブを選択
 	$('.nav li').click(function(){
 		$('.nav li').removeClass("active");
 		$(this).addClass('active');
+	});
+
+	// キーワードを選択
+	$('form input[type=text]').focus(function(){
+		$(this).select();
 	});
 
 	// 情報を見る
