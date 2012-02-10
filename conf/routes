@@ -11,7 +11,7 @@ GET     /toho/{keyword}                         Application.toho
 GET     /toho                                   Application.toho
 GET     /all/{keyword}                          Application.index
 GET     /                                       Application.index
-POST    /find                                   Application.find
+*       /find                                   Application.find
 #POST    /find/{tag}/{keyword}                   Application.find
 #POST    /find/{tag}                             Application.find
 

@@ -95,7 +95,7 @@ public class Application extends Controller
 		render("@index", keyword, songs, total);
 	}
 
-	public static void find(String tag, String keyword)
+	public static void findSong(String tag, String keyword)
 	{
 		if (tag.equals("anime"))
 		{

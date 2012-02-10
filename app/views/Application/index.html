@@ -14,7 +14,7 @@
 
 <ul id="dropnav" class="nav">
   <li class="dropdown">
-    <a href="#" class="dropdown-toggle" data-toggle="dropdown">ジャンル <b class="caret"></b></a>
+    <a href="#" class="dropdown-toggle" data-toggle="dropdown">HyperJoy検索 <b class="caret"></b></a>
     <ul class="dropdown-menu">
       <li><a href="@{anime(keyword)}">アニメ</a></li>
       <li><a href="@{vocaloid(keyword)}">ニコ動</a></li>
@@ -27,21 +27,34 @@
   </li>
 </ul>
 
-*{
-#{form @find(tag, keyword), class:'navbar-search pull-left'}
-#{field 'tag'}
-  <input type="hidden" name="${field.name}" value="${request.actionMethod}">
-#{/field}
+#{if request.actionMethod == 'anime'}
+#{form @anime(), class:'navbar-search pull-left'}
 #{field 'keyword'}
-  <input type="text" class="search-query span2" placeholder="キーワード" name="${field.name}" value="${field.value}">
+<input type="text" class="search-query span2" placeholder="キーワード" name="${field.name}" value="${field.value}">
 #{/field}
 #{/form}
-}*
-
-<form class="navbar-search pull-left" action="">
-  <input type="text" class="search-query span2" placeholder="キーワード" name="keyword" value="${keyword}">
-  <input type="hidden" name="tag" value="${request.actionMethod}">
-</form>
+#{/if}
+#{elseif request.actionMethod == 'vocaloid'}
+#{form @vocaloid(), class:'navbar-search pull-left'}
+#{field 'keyword'}
+<input type="text" class="search-query span2" placeholder="キーワード" name="${field.name}" value="${field.value}">
+#{/field}
+#{/form}
+#{/elseif}
+#{elseif request.actionMethod == 'toho'}
+#{form @toho(), class:'navbar-search pull-left'}
+#{field 'keyword'}
+<input type="text" class="search-query span2" placeholder="キーワード" name="${field.name}" value="${field.value}">
+#{/field}
+#{/form}
+#{/elseif}
+#{else}
+#{form @index(), class:'navbar-search pull-left'}
+#{field 'keyword'}
+<input type="text" class="search-query span2" placeholder="キーワード" name="${field.name}" value="${field.value}">
+#{/field}
+#{/form}
+#{/else}
 
     </div>
   </div>
