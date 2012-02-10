@@ -63,7 +63,7 @@
 #{ifnot keyword}
 <div class="alert alert-info">
 <a class="close">&times;</a>
-<p>曲数：${total} 件</p>
+<p>曲数：${total.format("#,##0")} 件あります。</p>
 </div>
 #{/ifnot}
 #{else}
@@ -78,7 +78,7 @@
 <div class="alert alert-success">
 <a class="close">&times;</a>
 <p>キーワード：${keyword}</p>
-<p>曲数：${total} 件中 ${songs?.size} 件</p>
+<p>曲数：${songs?.size?.format("#,##0")} 件見つかりました。</p>
 *{<p>${request.action}</p>}*
 *{<p>${request.actionMethod}</p>}*
 </div>
@@ -89,12 +89,15 @@
 	#{list songs, as:'song'}
 		<div data-tid="${song.tid}" data-title="${song.title?.raw()}" data-artist="${song.artist?.raw()}">
 			<span>${song.tid}</span>
+			／
 			<span class="${song.isHot ? 'label label-important' : ''}">${song.isHot ? '新' : ''}</span>
 			<span>${song.hot}</span>
 			<span class="${song.isMedley ? 'label label-success' : ''}">${song.isMedley ? 'メドレー' : ''}</span>
 			<span>${song.title?.raw()}</span>
+			／
 			<span>${song.artist?.raw()}</span>
-			<span>(${song.groups?.raw()})</span>
+			#{if song.groups}／#{/if}
+			<span>${song.groups?.raw()}</span>
 		</div>
 		*{
 		<small>
