@@ -2,18 +2,22 @@
 <html>
 <head>
 <meta charset="${_response_encoding}">
-<title>#{get 'title' /}</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="stylesheet" media="screen" href="@{'/public/stylesheets/main.css'}">
-<link rel="stylesheet" media="screen" href="@{'/public/stylesheets/bootstrap.min.css'}">
-#{get 'moreStyles' /}
+<meta name="format-detection" content="telephone=no">
+<meta name="apple-touch-fullscreen" content="yes">
+<meta http-equiv="X-UA-Compatible" content="chrome=1">
+<title>#{get 'title' /}</title>
 <link rel="shortcut icon" type="image/png" href="@{'/public/images/favicon.png'}">
+<link rel="apple-touch-icon" href="@{'/public/images/apple-touch-icon.png'}">
+<link rel="stylesheet" media="screen" href="@{'/public/stylesheets/bootstrap.min.css'}">
+<link rel="stylesheet" media="screen" href="@{'/public/stylesheets/main.css'}">
+#{get 'moreStyles' /}
 <script src="@{'/public/javascripts/jquery-1.7.1.min.js'}" type="text/javascript" charset="utf-8"></script>
 <script src="@{'/public/javascripts/bootstrap.min.js'}" type="text/javascript" charset="utf-8"></script>
 <script src="@{'/public/javascripts/main.js'}" type="text/javascript" charset="utf-8"></script>
 #{get 'moreScripts' /}
 </head>
-<body>
+<body data-spy="scroll" data-target=".subnav" data-offset="50">
 #{doLayout /}
 </body>
 </html>

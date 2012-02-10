@@ -1,6 +1,6 @@
 $(function()
 {
-	window.scrollTo(0, 1);
+	//window.scrollTo(0, 1);
 
 	$('.nav li').click(function(){
 		$('.nav li').removeClass("active");
