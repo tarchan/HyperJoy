@@ -29,33 +29,33 @@
 
 #{if request.actionMethod == 'anime'}
 #{form @anime(), class:'navbar-search pull-left'}
-<span class="icon-search icon-white"></span>
+<!-- <span class="icon-search icon-white"></span> -->
 #{field 'keyword'}
-<input type="text" class="search-query span2" placeholder="キーワード" name="${field.name}" value="${field.value}">
+<input type="text" x-webkit-speech class="search-query span2" placeholder="キーワード" name="${field.name}" value="${field.value}">
 #{/field}
 #{/form}
 #{/if}
 #{elseif request.actionMethod == 'vocaloid'}
 #{form @vocaloid(), class:'navbar-search pull-left'}
-<span class="icon-search icon-white"></span>
+<!-- <span class="icon-search icon-white"></span> -->
 #{field 'keyword'}
-<input type="text" class="search-query span2" placeholder="キーワード" name="${field.name}" value="${field.value}">
+<input type="text" x-webkit-speech class="search-query span2" placeholder="キーワード" name="${field.name}" value="${field.value}">
 #{/field}
 #{/form}
 #{/elseif}
 #{elseif request.actionMethod == 'toho'}
 #{form @toho(), class:'navbar-search pull-left'}
-<span class="icon-search icon-white"></span>
+<!-- <span class="icon-search icon-white"></span> -->
 #{field 'keyword'}
-<input type="text" class="search-query span2" placeholder="キーワード" name="${field.name}" value="${field.value}">
+<input type="text" x-webkit-speech class="search-query span2" placeholder="キーワード" name="${field.name}" value="${field.value}">
 #{/field}
 #{/form}
 #{/elseif}
 #{else}
 #{form @index(), class:'navbar-search pull-left'}
-<span class="icon-search icon-white"></span>
+<!-- <span class="icon-search icon-white"></span> -->
 #{field 'keyword'}
-<input type="text" class="search-query span2" placeholder="キーワード" name="${field.name}" value="${field.value}">
+<input type="text" x-webkit-speech class="search-query span2" placeholder="キーワード" name="${field.name}" value="${field.value}">
 #{/field}
 #{/form}
 #{/else}

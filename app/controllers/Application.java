@@ -86,7 +86,7 @@ public class Application extends Controller
 
 	public static void toho(String keyword)
 	{
-		List<Song> songs = Song.find("isToho is true and keywords like ?", "%" + keyword + "%").fetch();
+		List<Song> songs = Song.find("isToho is true and keywords Like ?", "%" + keyword + "%").fetch();
 		for (Song song : songs)
 		{
 			song.upgrade();
