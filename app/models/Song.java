@@ -34,6 +34,8 @@ public class Song extends Model
 	@Lob
 	public String keywords;
 
+	public String type;
+
 	@Lob
 	public String hot;
 
@@ -166,16 +168,19 @@ public class Song extends Model
 		{
 //			Logger.info("新曲: %s", tid);
 			isHot = true;
+			type = "hot";
 		}
 		if (VOCALOID_PAT.matcher(text).find())
 		{
 //			Logger.info("ボカロ: %s", tid);
 			isVocaloid = true;
+			type = "vocaloid";
 		}
 		if (TOHO_PAT.matcher(text).find())
 		{
 //			Logger.info("東方: %s", tid);
 			isToho = true;
+			type = "toho";
 		}
 //		if (isHot || isVocaloid || isToho)
 //		{

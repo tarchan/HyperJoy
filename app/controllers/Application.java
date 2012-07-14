@@ -51,22 +51,22 @@ public class Application extends Controller
 //		}
 
 		long total = Song.count();
-		List<Song> songs;
 //		List<Song> songs = Song.findAll();
 //		int total = songs.size();
 		if (keyword != null && keyword.length() > 0)
 		{
-			songs = Song.find("keywords like ?", "%" + keyword + "%").fetch();
+//			List<Song> songs = Song.find("keywords like ?", "%" + keyword + "%").fetch();
+			List<Song> songs = Song.find("byKeywordsIlike", "%" + keyword + "%").fetch();
 			for (Song song : songs)
 			{
 				song.upgrade();
 			}
+			render(keyword, songs, total);
 		}
 		else
 		{
-			songs = null;
+			render(keyword, total);
 		}
-		render(keyword, songs, total);
 	}
 
 	public static void anime(String keyword)
@@ -82,7 +82,8 @@ public class Application extends Controller
 
 	public static void vocaloid(String keyword)
 	{
-		List<Song> songs = Song.find("isVocaloid is true and keywords like ?", "%" + keyword + "%").fetch();
+//		List<Song> songs = Song.find("isVocaloid is true and keywords like ?", "%" + keyword + "%").fetch();
+		List<Song> songs = Song.find("byKeywordsIlikeAndType", "%" + keyword + "%", "vocaloid").fetch();
 		for (Song song : songs)
 		{
 			song.upgrade();
@@ -93,7 +94,8 @@ public class Application extends Controller
 
 	public static void toho(String keyword)
 	{
-		List<Song> songs = Song.find("isToho is true and keywords Like ?", "%" + keyword + "%").fetch();
+//		List<Song> songs = Song.find("isToho is true and keywords Like ?", "%" + keyword + "%").fetch();
+		List<Song> songs = Song.find("byKeywordsIlikeAndType", "%" + keyword + "%", "toho").fetch();
 		for (Song song : songs)
 		{
 			song.upgrade();
