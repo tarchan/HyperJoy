@@ -4,9 +4,15 @@ import play.*;
 import play.db.jpa.GenericModel.JPAQuery;
 import play.mvc.*;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
+import java.net.URL;
+import java.net.URLConnection;
 import java.net.URLDecoder;
 import java.util.*;
+import java.util.regex.Matcher;
 
 import models.*;
 
@@ -14,17 +20,18 @@ public class Application extends Controller
 {
 	static final String HYPERJOY = "http://homepage1.nifty.com/yottoide/hyperjoy.html";
 
-	@Before
-	public static void loadSongs()
-	{
-//		List<Song> songs = Song.findAll();
-//		if (songs.size() == 0)
-		if (Song.count() == 0)
-		{
-			Song.deleteAll();
-			Song.load(HYPERJOY);
-		}
-	}
+//	@Before
+//	public static void loadSongs()
+//	{
+////		List<Song> songs = Song.findAll();
+////		if (songs.size() == 0)
+//		if (Song.count() == 0)
+//		{
+//			Song.deleteAll();
+////			Song.loadAll(HYPERJOY);
+//			Bootstrap.loadAll(HYPERJOY);
+//		}
+//	}
 
 	public static void index0(String keyword)
 	{

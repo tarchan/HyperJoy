@@ -18,6 +18,8 @@ import play.db.jpa.Model;
 @Entity
 public class Song extends Model
 {
+	public static final String HYPERJOY = "http://homepage1.nifty.com/yottoide/hyperjoy.html";
+
 	public String tid;
 
 	@Lob
@@ -56,66 +58,66 @@ public class Song extends Model
 
 	static Pattern TOHO_PAT = Pattern.compile("(東方)");
 
-	public static void load(String path)
+	public static Matcher matcher(String input)
 	{
-		try
-		{
-			URLConnection con = new URL(path).openConnection();
-//			con.setReadTimeout(10000);
-//			con.setConnectTimeout(10000);
-			con.connect();
-			BufferedReader r = new BufferedReader(new InputStreamReader(con.getInputStream(), "Windows-31J"));
-			int i = 0;
-			while (true)
-			{
-				String line = r.readLine();
-				if (line == null) break;
-				
-				Matcher m = p.matcher(line);
-				if (m.find())
-				{
-//					Logger.info("[%d] %s", i, line);
-					
-//					Matcher m2 = p2.matcher(line);
-//					if (m2.find())
-//					{
-//						Song song = new Song();
-//						song.hot = m2.group(1);
-//						song.isHot = song.hot != null && song.hot.length() > 0;
-//						song.tid = m2.group(2);
-//						song.title = m2.group(3);
-//						song.artist = m2.group(4);
-//						song.groups = m2.group(5);
-//						song.keywords = line;
-//						song.save();
-//					}
-					Song song = new Song();
-					song.upgrade(line);
-				}
-
-				++i;
-				if (i % 1000 == 0) Logger.info("%d loaded.", i);
-//				if (i == 10) break;
-			}
-			Logger.info("%d loaded.", i);
-		}
-		catch (IOException x)
-		{
-			throw new RuntimeException("エラー: " + path, x);
-		}
+		return p.matcher(input);
 	}
 
-	public void upgrade()
-	{
-		upgrade(keywords);
-	}
+//	public static void loadAll(String path)
+//	{
+//		try
+//		{
+//			URLConnection con = new URL(path).openConnection();
+////			con.setReadTimeout(10000);
+////			con.setConnectTimeout(10000);
+//			con.connect();
+//			BufferedReader r = new BufferedReader(new InputStreamReader(con.getInputStream(), "Windows-31J"));
+//			int i = 0;
+//			while (true)
+//			{
+//				String line = r.readLine();
+//				if (line == null) break;
+//				
+//				Matcher m = p.matcher(line);
+//				if (m.find())
+//				{
+////					Logger.info("[%d] %s", i, line);
+//					
+////					Matcher m2 = p2.matcher(line);
+////					if (m2.find())
+////					{
+////						Song song = new Song();
+////						song.hot = m2.group(1);
+////						song.isHot = song.hot != null && song.hot.length() > 0;
+////						song.tid = m2.group(2);
+////						song.title = m2.group(3);
+////						song.artist = m2.group(4);
+////						song.groups = m2.group(5);
+////						song.keywords = line;
+////						song.save();
+////					}
+//					Song song = new Song();
+//					song.load(line);
+//				}
+//
+//				++i;
+//				if (i % 1000 == 0) Logger.info("%d loaded.", i);
+////				if (i == 10) break;
+//			}
+//			Logger.info("%d loaded.", i);
+//		}
+//		catch (IOException x)
+//		{
+//			throw new RuntimeException("エラー: " + path, x);
+//		}
+//	}
 
-	void upgrade(String line)
+	public void load(String input)
 	{
-		keywords = line;
-		line = line.replaceAll("&lt;", "<");
-		line = line.replaceAll("&gt;", ">");
-		Matcher m2 = p2.matcher(line);
+		keywords = input;
+		input = input.replaceAll("&lt;", "<");
+		input = input.replaceAll("&gt;", ">");
+		Matcher m2 = p2.matcher(input);
 		if (m2.find())
 		{
 //			hot = m2.group(1);
@@ -126,7 +128,7 @@ public class Song extends Model
 			groups = m2.group(5);
 			medley(artist);
 			medley(groups);
-			setTag(line);
+			setTag(input);
 			save();
 		}
 		else
@@ -134,6 +136,11 @@ public class Song extends Model
 //			Logger.info("曲番号未定: %s", line);
 			return;
 		}
+	}
+
+	public void upgrade()
+	{
+		load(keywords);
 	}
 
 	void medley(String text)
