@@ -6,11 +6,14 @@ import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import javax.persistence.Entity;
 import javax.persistence.Lob;
+
+import org.hibernate.annotations.Index;
 
 import play.Logger;
 import play.db.jpa.Model;
@@ -20,6 +23,7 @@ public class Song extends Model
 {
 	public static final String HYPERJOY = "http://homepage1.nifty.com/yottoide/hyperjoy.html";
 
+	@Index(name = "tid")
 	public String tid;
 
 	@Lob
@@ -56,7 +60,7 @@ public class Song extends Model
 //	static Pattern MEDLEY_PAT = Pattern.compile("<P CLASS=\"medley\">(.*?)</P>");
 	static Pattern MEDLEY_PAT = Pattern.compile("<P CLASS=\"medley\">\\[メドレー曲目\\]<BR>(.*?)</P>");
 
-	static Pattern VOCALOID_PAT = Pattern.compile("(初音ミク|鏡音リン|鏡音レン|巡音ルカ|MEIKO|KAITO|GUMI)");
+	static Pattern VOCALOID_PAT = Pattern.compile("(初音ミク|鏡音リン|鏡音レン|巡音ルカ|MEIKO|KAITO|GUMI|無印ミク)");
 
 	static Pattern TOHO_PAT = Pattern.compile("(東方)");
 
@@ -186,5 +190,17 @@ public class Song extends Model
 //		{
 //			save();
 //		}
+	}
+
+	public static List<Song> byKeywords(String keywords)
+	{
+		List<Song> songs = Song.find("byKeywordsIlike", "%" + keywords + "%").fetch();
+		return songs;
+	}
+
+	public static List<Song> byKeywords(String keywords, boolean isVocaloid, boolean isToho)
+	{
+		List<Song> songs = Song.find("byKeywordsIlikeAndIsVocaloidAndIsToho", "%" + keywords + "%", isVocaloid, isToho).fetch();
+		return songs;
 	}
 }

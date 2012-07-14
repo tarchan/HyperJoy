@@ -14,6 +14,7 @@ import play.test.*;
 import models.*;
 
 @OnApplicationStart(async=true)
+@Every("24h")
 public class Bootstrap extends Job
 {
 	public void doJob()
@@ -21,6 +22,7 @@ public class Bootstrap extends Job
 		try
 		{
 			Logger.info("曲リストを初期化します。");
+			// TODO 曲リストの更新を確認
 			// Check if the database is empty
 //			if (User.count() == 0)
 //			{

@@ -9,7 +9,8 @@ GET     /vocaloid/{keyword}                     Application.vocaloid
 GET     /vocaloid                               Application.vocaloid
 GET     /toho/{keyword}                         Application.toho
 GET     /toho                                   Application.toho
-GET     /all/{keyword}                          Application.index
+GET     /all/{keyword}                          Application.all
+GET     /all                                    Application.all
 GET     /                                       Application.index
 *       /find                                   Application.find
 #POST    /find/{tag}/{keyword}                   Application.find

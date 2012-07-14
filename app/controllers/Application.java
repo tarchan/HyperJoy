@@ -56,7 +56,8 @@ public class Application extends Controller
 		if (keyword != null && keyword.length() > 0)
 		{
 //			List<Song> songs = Song.find("keywords like ?", "%" + keyword + "%").fetch();
-			List<Song> songs = Song.find("byKeywordsIlike", "%" + keyword + "%").fetch();
+//			List<Song> songs = Song.find("byKeywordsIlike", "%" + keyword + "%").fetch();
+			List<Song> songs = Song.byKeywords(keyword);
 			for (Song song : songs)
 			{
 				song.upgrade();
@@ -71,7 +72,9 @@ public class Application extends Controller
 
 	public static void anime(String keyword)
 	{
-		List<Song> songs = Song.find("isVocaloid is false and isToho is false and keywords like ?", "%" + keyword + "%").fetch();
+//		List<Song> songs = Song.find("isVocaloid is false and isToho is false and keywords like ?", "%" + keyword + "%").fetch();
+//		List<Song> songs = Song.find("byKeywordsIlikeAndIsVocaloidAndIsToho", "%" + keyword + "%", false, false).fetch();
+		List<Song> songs = Song.byKeywords(keyword, false, false);
 		for (Song song : songs)
 		{
 			song.upgrade();
@@ -83,7 +86,8 @@ public class Application extends Controller
 	public static void vocaloid(String keyword)
 	{
 //		List<Song> songs = Song.find("isVocaloid is true and keywords like ?", "%" + keyword + "%").fetch();
-		List<Song> songs = Song.find("byKeywordsIlikeAndType", "%" + keyword + "%", "vocaloid").fetch();
+//		List<Song> songs = Song.find("byKeywordsIlikeAndType", "%" + keyword + "%", "vocaloid").fetch();
+		List<Song> songs = Song.byKeywords(keyword, true, false);
 		for (Song song : songs)
 		{
 			song.upgrade();
@@ -95,12 +99,24 @@ public class Application extends Controller
 	public static void toho(String keyword)
 	{
 //		List<Song> songs = Song.find("isToho is true and keywords Like ?", "%" + keyword + "%").fetch();
-		List<Song> songs = Song.find("byKeywordsIlikeAndType", "%" + keyword + "%", "toho").fetch();
+//		List<Song> songs = Song.find("byKeywordsIlikeAndType", "%" + keyword + "%", "toho").fetch();
+		List<Song> songs = Song.byKeywords(keyword, false, true);
 		for (Song song : songs)
 		{
 			song.upgrade();
 		}
 		long total = Song.count("isToho is true");
+		render("@index", keyword, songs, total);
+	}
+
+	public static void all(String keyword)
+	{
+		List<Song> songs = Song.byKeywords(keyword);
+		for (Song song : songs)
+		{
+			song.upgrade();
+		}
+		long total = Song.count();
 		render("@index", keyword, songs, total);
 	}
 
