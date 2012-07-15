@@ -69,54 +69,10 @@ public class Song extends Model
 		return p.matcher(input);
 	}
 
-//	public static void loadAll(String path)
-//	{
-//		try
-//		{
-//			URLConnection con = new URL(path).openConnection();
-////			con.setReadTimeout(10000);
-////			con.setConnectTimeout(10000);
-//			con.connect();
-//			BufferedReader r = new BufferedReader(new InputStreamReader(con.getInputStream(), "Windows-31J"));
-//			int i = 0;
-//			while (true)
-//			{
-//				String line = r.readLine();
-//				if (line == null) break;
-//				
-//				Matcher m = p.matcher(line);
-//				if (m.find())
-//				{
-////					Logger.info("[%d] %s", i, line);
-//					
-////					Matcher m2 = p2.matcher(line);
-////					if (m2.find())
-////					{
-////						Song song = new Song();
-////						song.hot = m2.group(1);
-////						song.isHot = song.hot != null && song.hot.length() > 0;
-////						song.tid = m2.group(2);
-////						song.title = m2.group(3);
-////						song.artist = m2.group(4);
-////						song.groups = m2.group(5);
-////						song.keywords = line;
-////						song.save();
-////					}
-//					Song song = new Song();
-//					song.load(line);
-//				}
-//
-//				++i;
-//				if (i % 1000 == 0) Logger.info("%d loaded.", i);
-////				if (i == 10) break;
-//			}
-//			Logger.info("%d loaded.", i);
-//		}
-//		catch (IOException x)
-//		{
-//			throw new RuntimeException("エラー: " + path, x);
-//		}
-//	}
+	public static boolean matches(String input)
+	{
+		return p.matcher(input).find();
+	}
 
 	public void load(String input)
 	{
@@ -194,13 +150,29 @@ public class Song extends Model
 
 	public static List<Song> byKeywords(String keywords)
 	{
-		List<Song> songs = Song.find("byKeywordsIlike", "%" + keywords + "%").fetch();
-		return songs;
+		try
+		{
+			List<Song> songs = Song.find("byKeywordsIlike", "%" + keywords + "%").fetch();
+			return songs;
+		}
+		catch (Exception x)
+		{
+			Logger.warn(x, "曲リストの準備中です。");
+			return null;
+		}
 	}
 
 	public static List<Song> byKeywords(String keywords, boolean isVocaloid, boolean isToho)
 	{
-		List<Song> songs = Song.find("byKeywordsIlikeAndIsVocaloidAndIsToho", "%" + keywords + "%", isVocaloid, isToho).fetch();
-		return songs;
+		try
+		{
+			List<Song> songs = Song.find("byKeywordsIlikeAndIsVocaloidAndIsToho", "%" + keywords + "%", isVocaloid, isToho).fetch();
+			return songs;
+		}
+		catch (Exception x)
+		{
+			Logger.warn(x, "曲リストの準備中です。");
+			return null;
+		}
 	}
 }

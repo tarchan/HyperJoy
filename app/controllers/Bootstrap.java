@@ -13,7 +13,7 @@ import play.test.*;
 
 import models.*;
 
-@OnApplicationStart(async=true)
+@OnApplicationStart()
 @Every("24h")
 public class Bootstrap extends Job
 {
@@ -56,11 +56,12 @@ public class Bootstrap extends Job
 			BufferedReader r = new BufferedReader(new InputStreamReader(con.getInputStream(), "Windows-31J"));
 			while (true)
 			{
-				String line = r.readLine();
-				if (line == null) break;
+				String input = r.readLine();
+				if (input == null) break;
 				
-				Matcher m = Song.matcher(line);
-				if (m.find())
+//				Matcher m = Song.matcher(line);
+//				if (m.find())
+				if (Song.matches(input))
 				{
 //					Logger.info("[%d] %s", i, line);
 					
@@ -78,10 +79,11 @@ public class Bootstrap extends Job
 //						song.save();
 //					}
 					Song song = new Song();
-					song.load(line);
+					song.load(input);
 				}
 
-				if (i % 1000 == 0) Logger.info("%d loaded.", i++);
+				if (i % 1000 == 0) Logger.info("%d loaded.", i);
+				i++;
 //				if (i == 10) break;
 			}
 			Logger.info("%,d 曲のデータが見つかりました。", i);

@@ -29,11 +29,16 @@ footer {
  display: none;
 }
 
-@media (max-width:480px){
+#ilogo {
+ background-image: url("/public/images/favicon.png")
+}
+
+@media (max-width:480px) {
+
 	#logo, #tabnav {
 	 display: none;
 	}
-	
+
 	#dropnav {
 	 display: block;
 	}

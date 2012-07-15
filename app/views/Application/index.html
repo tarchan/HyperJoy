@@ -1,31 +1,17 @@
 #{extends 'main.html' /}
-#{set title:'HyperJoy検索' /}
+#{set title:'HyperJoy!' /}
 
 <div class="navbar navbar-fixed-top">
   <div class="navbar-inner">
     <div class="container-fluid">
-	    <a id="logo" class="brand" href="@{index()}">HyperJoy検索</a>
+      <i class="icon-search"></i>
+      <a id="logo" class="brand" href="@{index()}">HyperJoy!</a>
 
 <ul id="tabnav" class="nav">
   <li class="${request.actionMethod == 'all' ? 'active' : ''}"><a href="@{all(keyword)}">すべて</a></li>
   <li class="${request.actionMethod == 'anime' ? 'active' : ''}"><a href="@{anime(keyword)}">アニメ</a></li>
   <li class="${request.actionMethod == 'vocaloid' ? 'active' : ''}"><a href="@{vocaloid(keyword)}">ボカロ</a></li>
   <li class="${request.actionMethod == 'toho' ? 'active' : ''}"><a href="@{toho(keyword)}">東方</a></li>
-</ul>
-
-<ul id="dropnav" class="nav">
-  <li class="dropdown">
-    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><b class="caret"></b></a>
-    <ul class="dropdown-menu">
-      <li><a href="@{anime(keyword)}">アニメ</a></li>
-      <li><a href="@{vocaloid(keyword)}">ニコ動</a></li>
-      <li><a href="@{toho(keyword)}">東方</a></li>
-*{
-      <li class="divider"></li>
-      <li><a href="#hot">新曲</a></li>
-}*
-    </ul>
-  </li>
 </ul>
 
 #{if request.actionMethod == 'anime'}
@@ -60,6 +46,22 @@
 #{/field}
 #{/form}
 #{/else}
+
+<ul id="dropnav" class="nav">
+  <li class="dropdown">
+    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><b class="caret"></b></a>
+    <ul class="dropdown-menu">
+      <li><a href="@{all(keyword)}">すべて</a></li>
+      <li><a href="@{anime(keyword)}">アニメ</a></li>
+      <li><a href="@{vocaloid(keyword)}">ニコ動</a></li>
+      <li><a href="@{toho(keyword)}">東方</a></li>
+*{
+      <li class="divider"></li>
+      <li><a href="#hot">新曲</a></li>
+}*
+    </ul>
+  </li>
+</ul>
 
     </div>
   </div>

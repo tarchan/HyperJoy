@@ -38,86 +38,147 @@ public class Application extends Controller
 		render(keyword);
 	}
 
+	static void upgradeSongs(List<Song> songs)
+	{
+		if (songs == null) return;
+
+		for (Song song : songs)
+		{
+			song.upgrade();
+		}
+	}
+
 	public static void index(String keyword)
 	{
-//		try
-//		{
-//			String q = request.querystring;
-//			q = URLDecoder.decode(q, "utf-8");
-//			Logger.info("querystring=%s", q);
-//		}
-//		catch (UnsupportedEncodingException x)
-//		{
-//		}
-
-		long total = Song.count();
+		List<Song> songs = null;
+		long total = 0;
+		try
+		{
+			total = Song.count();
 //		List<Song> songs = Song.findAll();
 //		int total = songs.size();
-		if (keyword != null && keyword.length() > 0)
-		{
+			if (keyword != null && keyword.length() > 0)
+			{
 //			List<Song> songs = Song.find("keywords like ?", "%" + keyword + "%").fetch();
 //			List<Song> songs = Song.find("byKeywordsIlike", "%" + keyword + "%").fetch();
-			List<Song> songs = Song.byKeywords(keyword);
-			for (Song song : songs)
-			{
-				song.upgrade();
+				songs = Song.byKeywords(keyword);
+				upgradeSongs(songs);
+//			if (songs != null)
+//			{
+//				for (Song song : songs)
+//				{
+//					song.upgrade();
+//				}
+//			}
+//				render(keyword, songs, total);
 			}
-			render(keyword, songs, total);
+//			else
+//			{
+//				render(keyword, total);
+//			}
 		}
-		else
+		finally
 		{
-			render(keyword, total);
+			render(keyword, songs, total);
 		}
 	}
 
 	public static void anime(String keyword)
 	{
-//		List<Song> songs = Song.find("isVocaloid is false and isToho is false and keywords like ?", "%" + keyword + "%").fetch();
-//		List<Song> songs = Song.find("byKeywordsIlikeAndIsVocaloidAndIsToho", "%" + keyword + "%", false, false).fetch();
-		List<Song> songs = Song.byKeywords(keyword, false, false);
-		for (Song song : songs)
+////		List<Song> songs = Song.find("isVocaloid is false and isToho is false and keywords like ?", "%" + keyword + "%").fetch();
+////		List<Song> songs = Song.find("byKeywordsIlikeAndIsVocaloidAndIsToho", "%" + keyword + "%", false, false).fetch();
+//		List<Song> songs = Song.byKeywords(keyword, false, false);
+//		upgradeSongs(songs);
+////		for (Song song : songs)
+////		{
+////			song.upgrade();
+////		}
+//		long total = Song.count("isVocaloid is false and isToho is false");
+//		render("@index", keyword, songs, total);
+		List<Song> songs = null;
+		long total = 0;
+		try
 		{
-			song.upgrade();
+			songs = Song.byKeywords(keyword, false, false);
+			upgradeSongs(songs);
+			total = Song.count("isVocaloid is false and isToho is false");
+			render("@index", keyword, songs, total);
 		}
-		long total = Song.count("isVocaloid is false and isToho is false");
-		render("@index", keyword, songs, total);
+		finally
+		{
+			render("@index", keyword, songs, total);
+		}
 	}
 
 	public static void vocaloid(String keyword)
 	{
-//		List<Song> songs = Song.find("isVocaloid is true and keywords like ?", "%" + keyword + "%").fetch();
-//		List<Song> songs = Song.find("byKeywordsIlikeAndType", "%" + keyword + "%", "vocaloid").fetch();
-		List<Song> songs = Song.byKeywords(keyword, true, false);
-		for (Song song : songs)
+////		List<Song> songs = Song.find("isVocaloid is true and keywords like ?", "%" + keyword + "%").fetch();
+////		List<Song> songs = Song.find("byKeywordsIlikeAndType", "%" + keyword + "%", "vocaloid").fetch();
+//		List<Song> songs = Song.byKeywords(keyword, true, false);
+//		upgradeSongs(songs);
+////		for (Song song : songs)
+////		{
+////			song.upgrade();
+////		}
+//		long total = Song.count("isVocaloid is true");
+//		render("@index", keyword, songs, total);
+		List<Song> songs = null;
+		long total = 0;
+		try
 		{
-			song.upgrade();
+			songs = Song.byKeywords(keyword, true, false);
+			upgradeSongs(songs);
+			total = Song.count("isVocaloid is true");
+			render("@index", keyword, songs, total);
 		}
-		long total = Song.count("isVocaloid is true");
-		render("@index", keyword, songs, total);
+		finally
+		{
+			render("@index", keyword, songs, total);
+		}
 	}
 
 	public static void toho(String keyword)
 	{
-//		List<Song> songs = Song.find("isToho is true and keywords Like ?", "%" + keyword + "%").fetch();
-//		List<Song> songs = Song.find("byKeywordsIlikeAndType", "%" + keyword + "%", "toho").fetch();
-		List<Song> songs = Song.byKeywords(keyword, false, true);
-		for (Song song : songs)
+////		List<Song> songs = Song.find("isToho is true and keywords Like ?", "%" + keyword + "%").fetch();
+////		List<Song> songs = Song.find("byKeywordsIlikeAndType", "%" + keyword + "%", "toho").fetch();
+//		List<Song> songs = Song.byKeywords(keyword, false, true);
+//		upgradeSongs(songs);
+////		for (Song song : songs)
+////		{
+////			song.upgrade();
+////		}
+//		long total = Song.count("isToho is true");
+//		render("@index", keyword, songs, total);
+		List<Song> songs = null;
+		long total = 0;
+		try
 		{
-			song.upgrade();
+			songs = Song.byKeywords(keyword, false, true);
+			upgradeSongs(songs);
+			total = Song.count("isToho is true");
+			render("@index", keyword, songs, total);
 		}
-		long total = Song.count("isToho is true");
-		render("@index", keyword, songs, total);
+		finally
+		{
+			render("@index", keyword, songs, total);
+		}
 	}
 
 	public static void all(String keyword)
 	{
-		List<Song> songs = Song.byKeywords(keyword);
-		for (Song song : songs)
+		List<Song> songs = null;
+		long total = 0;
+		try
 		{
-			song.upgrade();
+			songs = Song.byKeywords(keyword);
+			upgradeSongs(songs);
+			total = Song.count();
+			render("@index", keyword, songs, total);
 		}
-		long total = Song.count();
-		render("@index", keyword, songs, total);
+		finally
+		{
+			render("@index", keyword, songs, total);
+		}
 	}
 
 	public static void findSong(String tag, String keyword)
