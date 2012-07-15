@@ -14,6 +14,22 @@
   <li class="${request.actionMethod == 'toho' ? 'active' : ''}"><a href="@{toho(keyword)}">東方</a></li>
 </ul>
 
+<ul id="dropnav" class="nav">
+  <li class="dropdown">
+    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><b class="caret"></b></a>
+    <ul class="dropdown-menu">
+      <li><a href="@{all(keyword)}">すべて</a></li>
+      <li><a href="@{anime(keyword)}">アニメ</a></li>
+      <li><a href="@{vocaloid(keyword)}">ニコ動</a></li>
+      <li><a href="@{toho(keyword)}">東方</a></li>
+*{
+      <li class="divider"></li>
+      <li><a href="#hot">新曲</a></li>
+}*
+    </ul>
+  </li>
+</ul>
+
 #{if request.actionMethod == 'anime'}
 #{form @anime(), class:'navbar-search pull-left'}
 <!-- <span class="icon-search icon-white"></span> -->
@@ -46,22 +62,6 @@
 #{/field}
 #{/form}
 #{/else}
-
-<ul id="dropnav" class="nav">
-  <li class="dropdown">
-    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><b class="caret"></b></a>
-    <ul class="dropdown-menu">
-      <li><a href="@{all(keyword)}">すべて</a></li>
-      <li><a href="@{anime(keyword)}">アニメ</a></li>
-      <li><a href="@{vocaloid(keyword)}">ニコ動</a></li>
-      <li><a href="@{toho(keyword)}">東方</a></li>
-*{
-      <li class="divider"></li>
-      <li><a href="#hot">新曲</a></li>
-}*
-    </ul>
-  </li>
-</ul>
 
     </div>
   </div>
