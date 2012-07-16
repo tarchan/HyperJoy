@@ -13,7 +13,7 @@ import play.test.*;
 
 import models.*;
 
-@OnApplicationStart()
+@OnApplicationStart(async=true)
 @Every("24h")
 public class Bootstrap extends Job
 {
