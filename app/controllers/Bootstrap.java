@@ -23,6 +23,21 @@ public class Bootstrap extends Job
 		{
 			Logger.info("曲リストを初期化します。");
 			// TODO 曲リストの更新を確認
+			Song.find("").first();
+			Site site = Site.find("byName", "hyperjoy").first();
+			Logger.info("site=%s", site);
+			if (site == null)
+			{
+				site = new Site("hyperjoy", "http://homepage1.nifty.com/yottoide/hyperjoy.html");
+				site.save();
+			}
+
+			if (site.loading)
+			{
+				Logger.info("曲リストを読み込み中です。: %s", site.url);
+				return;
+			}
+
 			// Check if the database is empty
 //			if (User.count() == 0)
 //			{
@@ -30,7 +45,10 @@ public class Bootstrap extends Job
 //			}
 			if (Song.count() == 0)
 			{
-				loadAll(Song.HYPERJOY);
+				site.beginLoading();
+				Song.loadAll(site.url);
+				site.endLoading();
+//				loadAll(Song.HYPERJOY);
 			}
 			else
 			{
@@ -40,57 +58,6 @@ public class Bootstrap extends Job
 		catch (Exception x)
 		{
 			Logger.error(x, "曲リストの初期化を中止します。");
-		}
-	}
-
-	void loadAll(String path)
-	{
-		int i = 1;
-		try
-		{
-			Logger.info("曲リストの読み込みを開始します。: %s", path);
-			URLConnection con = new URL(path).openConnection();
-//			con.setReadTimeout(10000);
-//			con.setConnectTimeout(10000);
-			con.connect();
-			BufferedReader r = new BufferedReader(new InputStreamReader(con.getInputStream(), "Windows-31J"));
-			while (true)
-			{
-				String input = r.readLine();
-				if (input == null) break;
-				
-//				Matcher m = Song.matcher(line);
-//				if (m.find())
-				if (Song.matches(input))
-				{
-//					Logger.info("[%d] %s", i, line);
-					
-//					Matcher m2 = p2.matcher(line);
-//					if (m2.find())
-//					{
-//						Song song = new Song();
-//						song.hot = m2.group(1);
-//						song.isHot = song.hot != null && song.hot.length() > 0;
-//						song.tid = m2.group(2);
-//						song.title = m2.group(3);
-//						song.artist = m2.group(4);
-//						song.groups = m2.group(5);
-//						song.keywords = line;
-//						song.save();
-//					}
-					Song song = new Song();
-					song.load(input);
-				}
-
-				if (i % 1000 == 0) Logger.info("%d loaded.", i);
-				i++;
-//				if (i == 10) break;
-			}
-			Logger.info("%,d 曲のデータが見つかりました。", i);
-		}
-		catch (IOException x)
-		{
-			throw new IllegalArgumentException(String.format("%,d 行目にエラーがあります。", i), x);
 		}
 	}
 }

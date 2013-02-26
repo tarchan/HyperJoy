@@ -50,6 +50,17 @@ public class Application extends Controller
 
 	public static void index(String keyword)
 	{
+		if (Site.count() == 0)
+		{
+//			Logger.info("曲リストを読み込み中です。: %s", site.url);
+			error("曲リストを読み込み中です。");
+		}
+		Site site = Site.find("byName", "hyperjoy").first();
+		if (site.loading)
+		{
+			error("曲リストを読み込み中です。: " + Site.count());
+		}
+
 		List<Song> songs = null;
 		long total = 0;
 		try
